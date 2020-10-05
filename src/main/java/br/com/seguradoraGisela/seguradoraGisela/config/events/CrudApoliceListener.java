@@ -1,7 +1,5 @@
 package br.com.seguradoraGisela.seguradoraGisela.config.events;
 
-import java.util.Random;
-
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.data.mongodb.core.mapping.event.BeforeSaveEvent;
 import org.springframework.stereotype.Component;
@@ -21,6 +19,6 @@ public class CrudApoliceListener extends AbstractMongoEventListener<Apolices> {
 	}
 
 	private Long valorAleatorioGerado() {
-		return new Random(System.currentTimeMillis()).nextLong();
+		return new java.util.Random().nextLong() % (Long.MAX_VALUE - 1) + 1;
 	}
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.seguradoraGisela.seguradoraGisela.domain.Clientes;
+import br.com.seguradoraGisela.seguradoraGisela.responses.ResponseBodyCliente;
 import br.com.seguradoraGisela.seguradoraGisela.service.facade.ClientesService;
 
 @RestController
@@ -26,7 +27,11 @@ public class ClientesController {
 	public ResponseEntity<?> insereCliente(@RequestBody @Validated Clientes novoCliente) {
 		try {
 			String guidCriado = crudClientes.salvarCliente(novoCliente);
-			return ResponseEntity.created(new URI("seguradora/clientes/insereCliente/GUID:".concat(guidCriado))).build();
+			ResponseBodyCliente respCliente = new ResponseBodyCliente()
+					.addGuid(guidCriado)
+					.addCpf(novoCliente.getCpf());
+			return ResponseEntity.created(new URI("seguradora/clientes/insereCliente/GUID:".concat(guidCriado)))
+					.body(respCliente);
 
 		} catch (Exception e) {
 			e.printStackTrace();

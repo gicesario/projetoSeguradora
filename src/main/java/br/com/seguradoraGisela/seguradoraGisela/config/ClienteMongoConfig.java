@@ -3,6 +3,9 @@ package br.com.seguradoraGisela.seguradoraGisela.config;
 import java.util.Collections;
 
 import org.bson.UuidRepresentation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.mongo.MongoProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
@@ -15,16 +18,18 @@ import br.com.seguradoraGisela.seguradoraGisela.config.events.CrudApoliceListene
 import br.com.seguradoraGisela.seguradoraGisela.config.events.PersisteInsercaoListener;
 
 @Configuration
+@EnableAutoConfiguration
 public class ClienteMongoConfig extends AbstractMongoClientConfiguration {
 
-
+	@Autowired
+	private MongoProperties prop;
 	@Override
 	public void configureClientSettings(MongoClientSettings.Builder builder) {
 		builder.uuidRepresentation(UuidRepresentation.STANDARD);
-		builder.credential(MongoCredential.createScramSha1Credential("root", "admin", "root".toCharArray()))
+		builder.credential(MongoCredential.createScramSha1Credential(prop.getUsername(), prop.getAuthenticationDatabase(), prop.getPassword()))
 
 				.applyToClusterSettings(settings -> {
-					settings.hosts(Collections.singletonList(new ServerAddress("127.0.0.1", 27017)));
+					settings.hosts(Collections.singletonList(new ServerAddress(prop.getHost(), prop.getPort())));
 				});
 	}
 
@@ -40,6 +45,6 @@ public class ClienteMongoConfig extends AbstractMongoClientConfiguration {
 
 	@Override
 	protected String getDatabaseName() {
-		return "seguradoraGisela";
+		return prop.getDatabase();
 	}
 }

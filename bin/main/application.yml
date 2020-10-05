@@ -3,12 +3,13 @@ server:
   port: 9090
   
 spring:
-   data:
-   mongodb:
-      authentication-database: admin
-      user: root
-      password: root
-      database: seguradoraGisela
-      host: 127.0.0.1
-      port: 27017
-      
+  data.mongodb:
+    authentication-database: admin
+    password: root
+    username: root
+    host: 127.0.0.1
+    port: 27017
+    uri: #uri
+    database: seguradoraGisela
+    
+    
