@@ -1,48 +1,66 @@
 package br.com.seguradoraGisela.seguradoraGisela.service.impl;
 
-import java.util.Collection;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.seguradoraGisela.seguradoraGisela.domain.Clientes;
-import br.com.seguradoraGisela.seguradoraGisela.repository.ClientesRepository;
-import br.com.seguradoraGisela.seguradoraGisela.service.facade.ClientesService;
+import br.com.seguradoraGisela.seguradoraGisela.domain.Apolices;
+import br.com.seguradoraGisela.seguradoraGisela.repository.ApolicesRepository;
+import br.com.seguradoraGisela.seguradoraGisela.service.facade.ApolicesService;
 
 /**
- * Regras de negocio de Clientes
+ * Regras de negocio de Apolices
  *
  * @author Gisela
  *
  */
 @Service
-public class ApolicesServiceImpl implements ClientesService {
+public class ApolicesServiceImpl implements ApolicesService {
 
 	@Autowired
-	ClientesRepository clientesDAO;
+	ApolicesRepository apolicesDAO;
 
 	@Override
-	public void salvarClientes(List<Clientes> clientesNovos) throws Exception {
-		clientesDAO.saveAll(clientesNovos);
+	public Long salvarApolice(Apolices apoliceNovo) throws Exception {
+		apolicesDAO.saveAll(Collections.singleton(apoliceNovo));
+		return apoliceNovo.getNumeroApolice();
 	}
 
 	@Override
-	public String salvarCliente(Clientes clienteNovo) throws Exception {
-		clientesDAO.saveAll(Collections.singleton(clienteNovo));
-		return clienteNovo.getId();
+	public Apolices buscarApolicePorNumero(Long numeroApolice) throws Exception {
+		Optional<Apolices> apolice = apolicesDAO.buscaApoliceByNumero(numeroApolice);
+		if (apolice.isPresent()) {
+
+		}
+
+		return apolice.get();
 	}
 
 	@Override
-	public Optional<Clientes> buscarClienteByID(String id) throws Exception {
-		return clientesDAO.findById(id);
+	public boolean verificarApoliceVencido(Apolices apolice) throws Exception {
+		return apolice.getFimVigencia().isAfter(LocalDate.now());
 	}
 
 	@Override
-	public Collection<Clientes> buscarTodosClientes() throws Exception {
-		return clientesDAO.findAll();
+	public long calcularDiasVigencia(Apolices apolice) throws Exception {
+		return ChronoUnit.DAYS.between(apolice.getInicioVigencia(), apolice.getFimVigencia());
+	}
+
+	@Override
+	public long calcularDiasVencidos(Apolices apolice) throws Exception {
+		if (verificarApoliceVencido(apolice)) {
+			ChronoUnit.DAYS.between(apolice.getFimVigencia(), LocalDate.now());
+		}
+		return 0;
+	}
+
+	@Override
+	public String recuperarPlaVeiculoRegex(Apolices apolice) throws Exception {
+		return apolice.getPlacaVeiculo();
 	}
 
 }

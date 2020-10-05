@@ -14,10 +14,11 @@ repositories {
 	mavenCentral()
 }
 
-dependencies {
+dependencies {	
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'    	
-    
+    implementation 'com.mysema.querydsl:querydsl-mongodb'
+    implementation 'com.mysema.querydsl:querydsl-apt'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}

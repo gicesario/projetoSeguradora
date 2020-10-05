@@ -1,7 +1,7 @@
 package br.com.seguradoraGisela.seguradoraGisela.domain;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,10 +15,10 @@ public class Apolices extends EntidadeBase {
 	private Long numeroApolice;
 
 	@NonNull
-	private Date inicioVigencia;
+	private LocalDate  inicioVigencia;
 
 	@NonNull
-	private Date fimVigencia;
+	private LocalDate  fimVigencia;
 
 	@Indexed(unique = true)
 	@NonNull
@@ -35,19 +35,19 @@ public class Apolices extends EntidadeBase {
 		this.numeroApolice = numeroApolice;
 	}
 
-	public Date getInicioVigencia() {
+	public LocalDate  getInicioVigencia() {
 		return inicioVigencia;
 	}
 
-	public void setInicioVigencia(Date inicioVigencia) {
+	public void setInicioVigencia(LocalDate  inicioVigencia) {
 		this.inicioVigencia = inicioVigencia;
 	}
 
-	public Date getFimVigencia() {
+	public LocalDate  getFimVigencia() {
 		return fimVigencia;
 	}
 
-	public void setFimVigencia(Date fimVigencia) {
+	public void setFimVigencia(LocalDate  fimVigencia) {
 		this.fimVigencia = fimVigencia;
 	}
 
