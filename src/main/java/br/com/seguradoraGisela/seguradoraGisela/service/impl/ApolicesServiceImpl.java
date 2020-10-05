@@ -1,6 +1,7 @@
-package br.com.seguradoraGisela.seguradoraGisela.service;
+package br.com.seguradoraGisela.seguradoraGisela.service.impl;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.seguradoraGisela.seguradoraGisela.domain.Clientes;
 import br.com.seguradoraGisela.seguradoraGisela.repository.ClientesRepository;
+import br.com.seguradoraGisela.seguradoraGisela.service.facade.ClientesService;
 
 /**
  * Regras de negocio de Clientes
@@ -17,7 +19,7 @@ import br.com.seguradoraGisela.seguradoraGisela.repository.ClientesRepository;
  *
  */
 @Service
-public class ClientesServiceImpl implements ClientesService {
+public class ApolicesServiceImpl implements ClientesService {
 
 	@Autowired
 	ClientesRepository clientesDAO;
@@ -28,8 +30,9 @@ public class ClientesServiceImpl implements ClientesService {
 	}
 
 	@Override
-	public void salvarCliente(Clientes clienteNovo) throws Exception {
-		clientesDAO.save(clienteNovo);
+	public String salvarCliente(Clientes clienteNovo) throws Exception {
+		clientesDAO.saveAll(Collections.singleton(clienteNovo));
+		return clienteNovo.getId();
 	}
 
 	@Override

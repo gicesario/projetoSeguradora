@@ -12,14 +12,13 @@ import br.com.seguradoraGisela.seguradoraGisela.config.MongoPropriedades;
 
 @Configuration
 @EnableMongoRepositories
-@SpringBootApplication
 @EnableMongoAuditing
+@SpringBootApplication
 @EnableConfigurationProperties(MongoPropriedades.class)
 public class SeguradoraGiselaApplication {
 
 	@Autowired
-	static
-	MongoPropriedades teste;
+	private static MongoPropriedades teste;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SeguradoraGiselaApplication.class, args);

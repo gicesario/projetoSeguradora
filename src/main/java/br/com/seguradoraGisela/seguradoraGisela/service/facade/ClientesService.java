@@ -1,4 +1,4 @@
-package br.com.seguradoraGisela.seguradoraGisela.service;
+package br.com.seguradoraGisela.seguradoraGisela.service.facade;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,7 +19,7 @@ public interface ClientesService {
 
 	public void salvarClientes(List<Clientes> clientesNovos) throws Exception;
 
-	public void salvarCliente(Clientes clienteNovo) throws Exception;
+	public String salvarCliente(Clientes clienteNovo) throws Exception;
 
 	public Optional<Clientes> buscarClienteByID(String id) throws Exception;
 

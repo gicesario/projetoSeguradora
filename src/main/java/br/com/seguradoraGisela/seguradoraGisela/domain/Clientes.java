@@ -13,13 +13,13 @@ public class Clientes extends EntidadeBase {
 
 	@Indexed(unique = true)
 	@NonNull
-	private String CPF;
+	private String cpf;
 
 	@NonNull
 	private String cidade;
 
 	@NonNull
-	private String UF;
+	private String uf;
 
 	public String getNomeCompleto() {
 		return nomeCompleto;
@@ -29,12 +29,12 @@ public class Clientes extends EntidadeBase {
 		this.nomeCompleto = nomeCompleto;
 	}
 
-	public String getCPF() {
-		return CPF;
+	public String getCpf() {
+		return cpf;
 	}
 
-	public void setCPF(String cPF) {
-		CPF = cPF;
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public String getCidade() {
@@ -45,18 +45,20 @@ public class Clientes extends EntidadeBase {
 		this.cidade = cidade;
 	}
 
-	public String getUF() {
-		return UF;
+	public String getUf() {
+		return uf;
 	}
 
-	public void setUF(String uF) {
-		UF = uF;
+	public void setUf(String uf) {
+		this.uf = uf;
 	}
 
 	@Override
 	public String toString() {
-		return "Clientes [nomeCompleto=" + nomeCompleto + ", CPF=" + CPF + ", cidade=" + cidade + ", UF=" + UF + "]";
+		return "Clientes [nomeCompleto=" + nomeCompleto + ", cpf=" + cpf + ", cidade=" + cidade + ", uf=" + uf + "]";
 	}
+
+
 
 
 }

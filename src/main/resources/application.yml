@@ -1,7 +1,14 @@
-mongodb:
-   username: root
-   password: root
-   database: seguradoraGisela
-   host: 127.0.0.1
-   port: 27017
+server:
+  address: 127.0.0.1
+  port: 9090
+  
+spring:
+   data:
+   mongodb:
+      authentication-database: admin
+      user: root
+      password: root
+      database: seguradoraGisela
+      host: 127.0.0.1
+      port: 27017
       

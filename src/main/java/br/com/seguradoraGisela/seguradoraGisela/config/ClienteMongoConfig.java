@@ -2,42 +2,44 @@ package br.com.seguradoraGisela.seguradoraGisela.config;
 
 import java.util.Collections;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.bson.UuidRepresentation;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 
-import com.mongodb.MongoClientSettings.Builder;
+import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 
-@EnableConfigurationProperties(MongoPropriedades.class)
+import br.com.seguradoraGisela.seguradoraGisela.config.events.CrudApoliceListener;
+import br.com.seguradoraGisela.seguradoraGisela.config.events.PersisteInsercaoListener;
+
+@Configuration
 public class ClienteMongoConfig extends AbstractMongoClientConfiguration {
 
-	@Autowired
-	@Qualifier("prop")
-	private MongoPropriedades prop;
-
-	/*
-	 * @Bean public MongoClientFactoryBean mongo() { MongoClientFactoryBean mongo =
-	 * new MongoClientFactoryBean();
-	 * mongo.setHost(env.getProperty("spring.data.mongodb.host"));
-	 * mongo.setPort(env.getProperty("spring.data.mongodb.port", Integer.class));
-	 * return mongo; }
-	 */
 
 	@Override
-	protected void configureClientSettings(Builder builder) {
-		builder.credential(MongoCredential.createCredential("root", getDatabaseName(), "root".toCharArray()))
+	public void configureClientSettings(MongoClientSettings.Builder builder) {
+		builder.uuidRepresentation(UuidRepresentation.STANDARD);
+		builder.credential(MongoCredential.createScramSha1Credential("root", "admin", "root".toCharArray()))
+
 				.applyToClusterSettings(settings -> {
-					settings.hosts(
-							Collections.singletonList(new ServerAddress(prop.getHost(),
-									                                    prop.getPort())));
+					settings.hosts(Collections.singletonList(new ServerAddress("127.0.0.1", 27017)));
 				});
+	}
+
+	@Bean
+	public PersisteInsercaoListener acaoAntesSalvar() {
+		return new PersisteInsercaoListener();
+	}
+
+	@Bean
+	public CrudApoliceListener salvarApoliceComNumeroAleatorio() {
+		return new CrudApoliceListener();
 	}
 
 	@Override
 	protected String getDatabaseName() {
-		return prop.getDatabase();
+		return "seguradoraGisela";
 	}
 }
