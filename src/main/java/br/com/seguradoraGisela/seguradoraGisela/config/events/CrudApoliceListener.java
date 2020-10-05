@@ -19,6 +19,6 @@ public class CrudApoliceListener extends AbstractMongoEventListener<Apolices> {
 	}
 
 	private Long valorAleatorioGerado() {
-		return new java.util.Random().nextLong() % (Long.MAX_VALUE - 1) + 1;
+		return Math.abs(new java.util.Random(System.currentTimeMillis()).nextLong());
 	}
 }
