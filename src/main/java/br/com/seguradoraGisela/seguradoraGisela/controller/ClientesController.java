@@ -26,7 +26,6 @@ public class ClientesController {
 	public ResponseEntity<?> insereCliente(@RequestBody @Validated Clientes novoCliente) {
 		try {
 			String guidCriado = crudClientes.salvarCliente(novoCliente);
-			System.out.println("GUID: " + guidCriado);
 			return ResponseEntity.created(new URI("seguradora/clientes/insereCliente/GUID:".concat(guidCriado))).build();
 
 		} catch (Exception e) {

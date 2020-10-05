@@ -31,36 +31,39 @@ public class ApolicesServiceImpl implements ApolicesService {
 	}
 
 	@Override
-	public Apolices buscarApolicePorNumero(Long numeroApolice) throws Exception {
-		Optional<Apolices> apolice = apolicesDAO.buscaApoliceByNumero(numeroApolice);
-		if (apolice.isPresent()) {
-
-		}
-
-		return apolice.get();
+	public Optional<Apolices> buscarApolicePorNumero(Long numeroApolice) throws Exception {
+		return apolicesDAO.buscaApoliceByNumero(numeroApolice);
 	}
 
 	@Override
-	public boolean verificarApoliceVencido(Apolices apolice) throws Exception {
-		return apolice.getFimVigencia().isAfter(LocalDate.now());
+	public boolean verificarApoliceVencido(Optional<Apolices> apolice) throws Exception {
+		return apolice.get().getFimVigencia().isAfter(LocalDate.now());
 	}
 
 	@Override
-	public long calcularDiasVigencia(Apolices apolice) throws Exception {
-		return ChronoUnit.DAYS.between(apolice.getInicioVigencia(), apolice.getFimVigencia());
+	public long calcularDiasVigencia(Optional<Apolices> apolice) throws Exception {
+		return ChronoUnit.DAYS.between(apolice.get().getInicioVigencia(), apolice.get().getFimVigencia());
 	}
 
 	@Override
-	public long calcularDiasVencidos(Apolices apolice) throws Exception {
+	public long calcularDiasVencidos(Optional<Apolices> apolice) throws Exception {
 		if (verificarApoliceVencido(apolice)) {
-			ChronoUnit.DAYS.between(apolice.getFimVigencia(), LocalDate.now());
+			ChronoUnit.DAYS.between(apolice.get().getFimVigencia(), LocalDate.now());
 		}
 		return 0;
 	}
 
 	@Override
-	public String recuperarPlaVeiculoRegex(Apolices apolice) throws Exception {
-		return apolice.getPlacaVeiculo();
+	public String recuperarPlaVeiculoRegex(Optional<Apolices> apolice) throws Exception {
+		return apolice.get().getPlacaVeiculo();
+	}
+
+	@Override
+	public long calcularDiasVencidosOuAVencer(Optional<Apolices> apolice) throws Exception {
+		if (calcularDiasVencidos(apolice) > 0) {
+			return calcularDiasVigencia(apolice);
+		}
+		return 0;
 	}
 
 }
