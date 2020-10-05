@@ -15,10 +15,10 @@ public class Apolices extends EntidadeBase {
 	private Long numeroApolice;
 
 	@NonNull
-	private LocalDate  inicioVigencia;
+	private LocalDate inicioVigencia;
 
 	@NonNull
-	private LocalDate  fimVigencia;
+	private LocalDate fimVigencia;
 
 	@Indexed(unique = true)
 	@NonNull
@@ -35,19 +35,19 @@ public class Apolices extends EntidadeBase {
 		this.numeroApolice = numeroApolice;
 	}
 
-	public LocalDate  getInicioVigencia() {
+	public LocalDate getInicioVigencia() {
 		return inicioVigencia;
 	}
 
-	public void setInicioVigencia(LocalDate  inicioVigencia) {
+	public void setInicioVigencia(LocalDate inicioVigencia) {
 		this.inicioVigencia = inicioVigencia;
 	}
 
-	public LocalDate  getFimVigencia() {
+	public LocalDate getFimVigencia() {
 		return fimVigencia;
 	}
 
-	public void setFimVigencia(LocalDate  fimVigencia) {
+	public void setFimVigencia(LocalDate fimVigencia) {
 		this.fimVigencia = fimVigencia;
 	}
 

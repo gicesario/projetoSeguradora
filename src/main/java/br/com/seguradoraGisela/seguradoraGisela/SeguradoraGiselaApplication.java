@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories
 @EnableMongoAuditing
 @SpringBootApplication
+
 public class SeguradoraGiselaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SeguradoraGiselaApplication.class, args);
